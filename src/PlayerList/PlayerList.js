@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 
+import { fetchChars } from '../APIFile/apiFile';
 import PlayerCard from '../PlayerCard/PlayerCard';
 
 class PlayerList extends Component {
   state = {
-    characters: [
-      {
-        id: 1,
-        name: 'test',
-        sprites: {
-          front_default: 'http://pokeapi.co/media/sprites/pokemon/12.png',
-        },
-      },
-    ],
+    characters: [],
   };
 
+  componentDidMount() {
+    console.log('mounting');
+    fetchChars().then((result) => {
+      this.setState({ characters: result });
+    });
+  }
   render() {
+    console.log('rendering');
     return (
       <main>
-        <p>This is where my chars will be</p>
+        <p>Chart goes here</p>
         <ul>
           {this.state.characters.map((character) => {
-            return <PlayerCard {...character} />;
+            return <PlayerCard key={character.id} {...character} />;
           })}
         </ul>
       </main>
